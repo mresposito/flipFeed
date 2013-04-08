@@ -1,0 +1,27 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET    /                              controllers.Application.index
+
+# AUTH
+GET    /login                         controllers.Auth.login
+POST   /login                         controllers.Auth.authenticate
+GET    /logout                        controllers.Auth.logout
+GET    /createUser                    controllers.Auth.createUser
+POST   /createUser                    controllers.Auth.newUser
+
+# Feedbacks pages ( called feeds )
+GET   /dashboard                    controllers.Feeds.index
+POST  /addFeed                        controllers.Feeds.add
+GET   /:owner/:name                   controllers.Feeds.display(owner:String, name: String)
+POST  /:owner/:name                   controllers.Feeds.commentOn(owner:String, name: String)
+
+GET   /:name                          controllers.Feeds.browseProfile( name:String )
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file                 controllers.Assets.at(path="/public", file)
+
+# Javascript routing
+# GET     /assets/javascripts/routes    controllers.Application.javascriptRoutes

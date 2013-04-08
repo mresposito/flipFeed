@@ -1,0 +1,27 @@
+@( user:User, feed: Feed, comments: Seq[Comment] )
+
+@import helper.twitterBootstrap._
+
+@main("FlipFeed @feed.name", user ) {
+    <div class="page-header">
+      <h1>@feed.name<small> @feed.description</small></h1>
+    </div>
+    @if( user.name != feed.owner ) {
+      <h3 id="author"> Created by @feed.owner </h3>
+    }
+
+    @comments.map { render =>
+      @feeds.comment( render )
+    }
+
+    @if( user.name != feed.owner ) {
+
+    <div id="commentForm">
+        <form class="span4" action="@routes.Feeds.commentOn(feed.owner, feed.name)" method="POST">
+        <input type="text" rows="3" name="comment" id="comment" required></textarea>
+        <input type="checkbox" name="anon" id="anon" value="anon"> Make post anonymous
+        <button class="btn" type="submit" id="commentbutton">Comment</button>
+      <!-- </form> -->
+    </div>
+   }
+}

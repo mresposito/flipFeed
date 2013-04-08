@@ -1,0 +1,49 @@
+@( user: User, feeds:Seq[Feed], form:Form[(String,String,String)])
+
+@main("FlipFeed dashboard", user) {
+    
+    <h1>Your feedback pages:</h1>
+    
+      @feeds.map { feed =>
+        <dl >
+          <dt>
+          <a class="feeds" id="@feed.name" href="@routes.Feeds.display(feed.owner, feed.name)">
+            @feed.name
+          </a> </dl>
+        </dl>
+      }
+    
+    <!-- Button to trigger modal -->
+    <a href="#myModal" role="button" class="btn btn-primary" id="popupCreate" data-toggle="modal">Create New Feedback Page</a>
+     
+    <!-- Modal -->
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Create Feedback page<h3>
+    </div>
+    <div class="modal-body">
+    <h3>Enter name and description</h3>
+
+    @helper.form( routes.Feeds.add ) {
+      @form.globalError.map { error =>
+        <p class="error">
+          @error.message
+      }
+      <p>
+        <input type="text" name="name" placeholder="Name" id="name" value="@form("name").value">
+      </p>
+      <p>
+        <input type="text" name="description" placeholder="Description" id="description">
+      </p>
+      <p>
+        <input type="checkbox" name="anon" value="anon" >Anonymous wall<br>
+      </p> 
+      </div>
+      <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      <button class="btn btn-primary" type="submit" id="createbutton">Create</button>
+    }
+    </div>
+  </div> <!-- end modal -->
+}
