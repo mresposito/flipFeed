@@ -11,6 +11,17 @@ object Application extends Controller {
   def index = Action {
      Ok(views.html.index("Welcome to Flipfeed"))
   }
+
+  // -- Javascript routing
+
+  def javascriptRoutes = Action { implicit request =>
+    import routes.javascript._
+    Ok(
+      Routes.javascriptRouter("jsRoutes") (
+        Feeds.add, Feeds.validName 
+      )
+    ).as("text/Javascript")
+  }
 }
 
 /***

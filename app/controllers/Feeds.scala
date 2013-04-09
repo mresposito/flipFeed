@@ -103,4 +103,20 @@ object Feeds extends Controller with Secured {
       }.getOrElse(NotFound)
     }.getOrElse(NotFound)
   }
+
+  /*
+   * check if a name is valid
+   */
+  def validName (owner:String) = Action { implicit request =>
+    Form("name" -> nonEmptyText).bindFromRequest.fold ( 
+      errors =>  BadRequest("Not valid"),
+      name => {
+        if( Feed.findByOwnerName ( owner, name ).isDefined ) {
+          BadRequest("Name taken")
+        } else {
+          Ok
+        }
+      }
+    )
+  }
 }

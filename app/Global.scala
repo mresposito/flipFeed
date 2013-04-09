@@ -37,18 +37,20 @@ object InitialData {
       ).foreach(Feed.create)
     }
 
-    Feed.findByAuthor ( "michele" ).map { feed =>
-      Seq(
-        Comment(Id(1), "THis is great!!"   , false, feed.id.get, feed.owner ),
-        Comment(Id(2), "THis too, its nice", true , feed.id.get, feed.owner )
-      ).foreach(Comment.create)
-    }
+    if(Comment.findAll.isEmpty ) {
+      Feed.findByAuthor ( "michele" ).map { feed =>
+        Seq(
+          Comment(Id(1), "THis is great!!"   , false, feed.id.get, feed.owner ),
+          Comment(Id(2), "THis too, its nice", true , feed.id.get, feed.owner )
+        ).foreach(Comment.create)
+      }
 
-    Feed.findByAuthor ( "sandra" ).map { feed =>
-      Seq(
-        Comment(Id(1), "I agree"       , false, feed.id.get, feed.owner ),
-        Comment(Id(2), "keep it going!", true, feed.id.get, feed.owner )
-      ).foreach( Comment.create )
+      Feed.findByAuthor ( "sandra" ).map { feed =>
+        Seq(
+          Comment(Id(1), "I agree"       , false, feed.id.get, feed.owner ),
+          Comment(Id(2), "keep it going!", true, feed.id.get, feed.owner )
+        ).foreach( Comment.create )
+      }
     }
   }
 }

@@ -1,10 +1,9 @@
 @(form: Form[(String,String,String,String)])(implicit flash: Flash)
 
 @main( "Create new account in flipFeed" ) {
-  
-  @helper.form(routes.Auth.newUser) {
-      
+
       <h1>Create a new account</h1>
+  @helper.form(routes.Auth.newUser , 'id -> "signupForm") {
       
       @form.globalError.map { error =>
           <p class="error">
@@ -18,22 +17,28 @@
           </p>
       }
       
-      <p>
+      <div class="control-group">
+        <div class="controls">
           <input type="email" name="email" placeholder="Email" id="email" value="@form("email").value">
-      </p>
+        </div>
+      </div>
 
-      <p>
+      <div class="control-group">
+        <div class="controls">
           <input type="text" name="name" placeholder="Name" id="name" value="@form("name").value">
-      </p>
-      <p>
-          <input type="password" name="passw1" id="passw1" placeholder="Password">
-      </p>
-      <p>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <p><input type="password" name="passw1" id="passw1" placeholder="Password"></p>
           <input type="password" name="passw2" id="passw2" placeholder="Password">
-      </p>
-      <p>
-          <button class="btn" type="submit" id="createbutton">Join</button>
-      </p>
+        </div>
+      </div>
+
+        <div class="form-action">
+          <button class="btn btn-primary" type="submit" id="createbutton">Join</button>
+        </div>
       
   }
 }

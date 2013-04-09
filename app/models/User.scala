@@ -37,6 +37,8 @@ object User {
     }
   }
 
+  def findName ( email: String ): Option[String] = Option( findByEmail(email).get.name )
+
   /**
    * Retrieve all users.
    */
