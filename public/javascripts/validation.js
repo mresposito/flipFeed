@@ -23,6 +23,11 @@ $.validator.addMethod("newName", function (value) {
   return ret
 }, "Please select a new name")
 
+
+$.validator.addMethod("regularName", function (value) {
+  return /^[a-z0-9]+$/i.test(value)
+}, "Name must be alphanumeric")
+
 $().ready(function() {
 	// validate the comment form when it is submitted
 	$("#newFeedForm").validate({
@@ -30,12 +35,15 @@ $().ready(function() {
       name: {
         required: true,
         minlength: 3,
-        newName: "newName"
+        maxlength: 25,
+        newName: "newName",
+        regularName: "regularName"
       }, 
       messages: {
         name: {
           required: "Please enter a name",
           minlength: "Name must be at least 3 characters",
+          maxlength: "Name must be less then 25 characters",
           taken: "Name already taken"
         }
       },
@@ -56,10 +64,13 @@ $().ready(function() {
       name : {
         required: true,
         minlength: 2,
+        maxlength: 25,
+        regularName: "regularName"
       }, 
       email: true,
 			passw1: {
 				required: true,
+        maxlength: 25,
 				minlength: 5
 			},
 			passw2: {
@@ -71,11 +82,13 @@ $().ready(function() {
       name: {
         required: "Please enter a name",
         minlength: "Name must be at least 3 characters",
+        maxlength: "Name must be less then 25 characters",
       }, 
       email: "Please enter a valid email address",
       passw1: {
 				required: "Please provide a password",
-				minlength: "Your password must be at least 5 characters long"
+				minlength: "Your password must be at least 5 characters long",
+        maxlength: "Password must be less then 25 characters",
 			},
 			passw2: {
 				required: "Please provide a password",
