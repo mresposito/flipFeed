@@ -1,22 +1,38 @@
-@( user: User, feeds:Seq[Feed], form:Form[(String,String,String)])
+@( user: User, fds:Seq[Feed], form:Form[(String,String,String)])
 
 @main("FlipFeed dashboard", user) {
+  <div class="row"> 
 
-    <a href="@routes.Feeds.index" class="navbar-link">Dashboard</a>
+    <!-- DASHBOARD CORE -->
 
-    <h1>Your feedback pages:</h1>
+    <div class="span3"> 
+      <h3>@user.name</h3>
+      Feeds recieved: 2
+    </div>
+
+    <div class="span9">
+      <div class="row">
+        <div class="span8">
+          <h2>Feedback pages</h2>
+        </div>
+        <div class="span1" id="addBtn">
+          <!-- add link -->
+          <a href="#myModal" class="btn btn-success" role="button" id="popupCreate" data-toggle="modal">
+            <i class="icon-plus" id="green"></i>
+          </a>
+        </div>
+      </div>
     
-      @feeds.map { feed =>
-        <dl >
-          <dt>
-          <a class="feeds" id="@feed.name" href="@routes.Feeds.display(feed.owner, feed.name)">
-            @feed.name
-          </a> </dl>
-        </dl>
-      }
-    
+      @feeds.listFeed( fds )
+   
+    </div>
+
+    <!---->
+    <!--ADDITIONAL BUTTONS AND FUNCTIONALITIES -->
+    <!---->
+
     <!-- Button to trigger modal -->
-    <a href="#myModal" role="button" class="btn btn-primary" id="popupCreate" data-toggle="modal">Create New Feedback Page</a>
+    
      
     <!-- Modal -->
     <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -46,7 +62,6 @@
          <label class="checkbox">
           <input type="checkbox" name="anon" value="anon" >Anonymous wall
         </label>
-        </p> 
         </div>
       </div>
       <div class="modal-footer">
@@ -59,4 +74,5 @@
     </div>
   </div> <!-- end modal -->
 
+  </div> <!-- end row -->
 }

@@ -23,7 +23,8 @@ log = (args...) ->
 # ---------------------------------------- FEED
 class Feed extends Backbone.View
   initialize: ->
-    $(".editFeedName").change @editName
+    alert("load feed page")
+    # $(".editFeedName").change @editName
     # $(".editFeedName").focus @editName
     # HTML is our model
     # @el.children("li").each (i,group) ->
@@ -36,9 +37,9 @@ class Feed extends Backbone.View
 # ------------------------------------- INIT APP
 $ -> # document is ready!
 
+  feedPage = new Feed el: $("#feedContainer")
   # app = new AppRouter()
-  # makeName = new Feed el: $(".editFeedName")
 
-  # Backbone.history.start
-  #
-  #   pushHistory: true
+  Backbone.history.start
+  
+    pushHistory: true

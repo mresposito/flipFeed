@@ -19,11 +19,7 @@
 }
 
 div#voterank {
-  position: absolute;
-  margin: 7px;
-  margin-top: 35px;
-  margin-left: 0px;
-  font-size:22px;
+  font-size:27px;
 }
 
 label.valid {
@@ -38,4 +34,16 @@ label.error {
   color: red;
   padding: 2px 8px;
   margin-top: 2px;
+}
+
+/* unordered list */
+ul.table {
+  padding: 4px;
+  margin: 10px;
+  line-height: 10px;
+  list-style-type: none;
+}
+
+div.span1#addBtn {
+  margin:10px;
 }

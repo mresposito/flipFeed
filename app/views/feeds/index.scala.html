@@ -1,8 +1,9 @@
-@( user:User, feed: Feed, comments: Seq[Comment] )
+@( user:User, feed: Feed, commentsList: Seq[Comment] )
 
 @import helper.twitterBootstrap._
 
-@main("FlipFeed @feed.name", user ) {
+@main("FlipFeed" + feed.name, user ) {
+  <div id="feedContainer">
     <div class="page-header">
       <h1>@feed.name<small> @feed.description</small></h1>
     </div>
@@ -11,9 +12,10 @@
     } else {
     <div class="tabs-flipfeed">
       <ul id="myTab" class="nav nav-tabs">
-        <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-        <li><a href="#comments" data-toggle="tab">Comments</a></li>
-        <li><a href="#edit" data-toggle="tab">Edit</a></li>
+        <li class="active">
+          <a href="#home" data-toggle="tab"><i class="icon-home"></i>Home</a></li>
+          <li><a href="#comments" data-toggle="tab"> <i class="icon-comment"> </i>Comments</a></li>
+          <li><a href="#edit" data-toggle="tab"><i class="icon-cog"></i> Edit</a></li>
       </ul>
     </div>
     }
@@ -25,25 +27,40 @@
 
       <div class="tab-pane fade" id="comments">
         <!--display the comments -->
-        @comments.map { render =>
-          @feeds.comment( render )
-        }
+        @feeds.listComments( commentsList )
 
         @if( user.name != feed.owner ) {
 
         <div id="commentForm">
             <form class="span4" action="@routes.Feeds.commentOn(feed.owner, feed.name)" method="POST">
-            <input type="text" rows="3" name="comment" id="comment" required></textarea>
-            <input type="checkbox" name="anon" id="anon" value="anon"> Make post anonymous
-            <button class="btn" type="submit" id="commentbutton">Comment</button>
-          <!-- </form> -->
+              <input type="text" rows="3" name="comment" id="comment" required></textarea>
+              <input type="checkbox" name="anon" id="anon" value="anon"> Make post anonymous
+              <button class="btn" type="submit" id="commentbutton">Comment</button>
+          </form>
         </div>
        }
 
       </div>
       <div class="tab-pane fade" id="edit">
-        <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
-      </div>
+        <h3> Personalize feedback page</h3>
+          No element currently selected.
+
+        <h3> Comment wall </h3>
+        <div id="commentWallPref">
+          <form class="commentPref" action="#">
+            <ul class="unstyled">
+              <li> <input type="checkbox" name="showWall" value="true">Show comment wall </li>
+              <li> <input type="checkbox" name="anon" value="false">Make wall anonymous </li>
+              <li> <input type="checkbox" name="single" value="false">Require single post </li>
+            </ul>
+          </form>
+        </div>
+        <h3> Privacy options </h3>
+        <form class="privacy" action="#">
+
+        </form>
+        
+      </div> <!--end edit-->
     </div>
 
    <script>
@@ -57,4 +74,5 @@
       $('#myTab a:last').tab('show'); // Select last tab
       $('#myTab li:eq(2) a').tab('show'); // Select third tab (0-indexed)
    </script>
+ </div> <!-- end feed container-->
 }

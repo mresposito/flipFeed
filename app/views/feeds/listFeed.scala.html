@@ -1,0 +1,18 @@
+@( feeds: Seq[Feed] )
+
+<!--render the feed list-->
+
+<ul class="table">
+  @feeds.map { feed =>
+    <li class="fTableEntry">
+  <hr size=1> 
+      <h3>
+      <a class="feeds" id="@feed.name" href="@routes.Feeds.display(feed.owner, feed.name)">
+          @feed.name
+        </a>
+      </h3>
+      <small>@feed.description </small>
+    </li>
+  }
+  <hr size=1> 
+</ul><br>

@@ -1,0 +1,25 @@
+@( comments: Seq[Comment] )
+
+<ul class="table">
+  @comments.map { comment =>
+
+  <li class="fTableEntry">
+  <hr size=1> 
+  <div class="row" id="commentwrapper">
+    <div class="span1" id="voterank">
+      <i class="icon-chevron-up"></i><br>
+      0<br>
+      <i class="icon-chevron-down"></i>
+    </div>
+
+    <div class="span11">
+      @comment.text <br>
+      @if( ! comment.anon ) {
+        <a href="@routes.Users.index("@comment.author")">@comment.author</a>
+      }
+    </div>
+  </div>
+  </li>
+  }
+  <hr size=1> 
+</ul><br>
