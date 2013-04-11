@@ -1,0 +1,72 @@
+\documentclass[a4paper]{article}
+\usepackage{ makeidx,amsmath, amsthm,amssymb,enumerate, graphicx,amsfonts, url}
+
+\begin{document}
+\begin{center}
+{\bf{\huge Flipfeed.com }}\\
+Michele Esposito\\
+\end{center}
+
+\section{Abstract} % (fold)
+\label{sec:Abstract}
+\subsection{Document Purpose} % (fold)
+\label{sub:Document Purpose}
+This document describes the functional requirement of a website called FlipFeed. The idea of this website was born after a really tedious math class. I just wanted to give feedback the professor, in order to tell him all the things that he could have improved on. However, I had no way to do so, so I thought that it would be great to have a website where you can give feedback to people and things. 
+% subsection Document Purpose (end)
+\subsection{Motivation} % (fold)
+\label{sub:Motivatio}
+I believe that a website where you can give feedback to people and organizations would be really beneficial in many different ways. Feedback is extremely important, and I am sure that people will be able to improve greatly by using a website like this. Currently, every organization has its own way to get feedback from the users, but I believe that it would be awesome to have a much more organized way to manage all of that information.
+% subsection Motivatio (end)
+% section Abstract (end)
+\section{Technical Specifications} % (fold)
+\label{sec:Techninal Specifications}
+\begin{enumerate}
+  \item {\bf Platform: } Web-based.
+  \item {\bf Programming language:} Scala.
+  \item {\bf Backend Web Frameworks:} Play.
+  \item {\bf Other library used:}
+    \begin{itemize}
+      \item Backbone.js
+      \item Bootstrap
+    \end{itemize}
+\end{enumerate}
+% section Techninal Specifications (end)
+\section{Website actions} % (fold)
+\label{sec:Technical Specificatio}
+\begin{enumerate}
+  \item User login. User account would contain the list of all the pages he is getting feedback on, and the posts where he has commented.
+  \item Add new page where can get feedback.
+  \item Page creation functionalities:
+    \begin{itemize}
+      \item Be able to create a new page to get feedback on certain topic 
+      \item Page can require anonymous posting, or not.
+      \item Can have different types of feedbacks, such as comments or votes.
+      \item Can be closed, or open with link. Different modes for access control.
+    \end{itemize}
+  \item Leaving feedback functionalities:
+    \begin{itemize}
+      \item User can leave feedback on given pages.
+      \item User can browse public feedback pages, or profiles.
+    \end{itemize}
+\end{enumerate}
+% section Technical Specification (end)
+\section{Timeline} % (fold)
+\label{sec:Timeline}
+\subsection{Week 1} % (fold)
+\label{sub:Week 1}
+Basic interface of the website down. Add user login, let user create new feedback pages. Create test to make mock database, and new pages. Also add security checks to the test cases.
+% subsection Week 1 (end)
+\subsection{Week 2} % (fold)
+\label{sub:Week 2}
+Start working on front end. Implement security and user input control. Continue working on backend logic.
+% subsection Week 2  (end)
+\subsection{Week 3} % (fold)
+\label{sub:Week 3}
+Allow highly customizable feedback page. Also allow browsing through other people's profiles, create new home page.
+% subsection Week 3  (end)
+\subsection{Week 4} % (fold)
+\label{sub:Week 4}
+Work on UI to make the website look pretty. By the end of this week, the website will be up and running, so also deploy it to a webserver.
+% subsection Week 4 (end)
+% section Timeline (end)
+\end{document}
