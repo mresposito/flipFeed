@@ -19,36 +19,47 @@
     </head>
     <body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="@routes.Application.index">Flipfeed</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-            </ul>
-            @if( user != null ) {
-              <p class="navbar-text pull-right">
-                Welcome, <a href="@routes.Feeds.index" class="navbar-link">@user.name</a>
-              <a href="@routes.Auth.logout()"> <button class="btn" type="button" >Log out</button> </a>
-              </p>
-            } else {
-              <form class="navbar-form pull-right" action="@routes.Auth.login" method="POST">
-                <input class="span2" type="email" name="email" placeholder="Email" id="email">
-                <input class="span2" type="password" name="password" id="password" placeholder="Password">
-                <button id="loginbutton" type="submit" class="btn">Sign in</button>
-             </form>
-            }
-          </div><!--/.nav-collapse -->
+
+    <!-- <header id="navigation"> -->
+    <!--   <div class="navbar navbar-inverse "> -->
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="upper-navbar">
+          <br>
+        </div>
+        <div class="navbar-inner">
+          <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="@routes.Application.index">Flipfeed</a>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+              </ul>
+              @if( user != null ) {
+                <p class="navbar-text pull-right">
+                  Welcome, <a href="@routes.Feeds.index" class="navbar-link">@user.name</a>
+                <a href="@routes.Auth.logout()"> <button class="btn" type="button" >Log out</button> </a>
+                </p>
+              } else {
+                <form class="navbar-form pull-right" action="@routes.Auth.login" method="POST">
+                  <input class="span2" type="email" name="email" placeholder="Email" id="email">
+                  <input class="span2" type="password" name="password" id="password" placeholder="Password">
+                  <button id="loginbutton" type="submit" class="btn">Sign in</button>
+               </form>
+              }
+            </div><!--/.nav-collapse -->
+
+        <div class="lower-navbar">
+          <br><br>
+        </div>
+          </div>
         </div>
       </div>
-    </div>
+    <!-- </header> -->
       
       <div class="container">
           @content

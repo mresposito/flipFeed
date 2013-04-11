@@ -39,3 +39,17 @@ label.error {
   padding: 2px 8px;
   margin-top: 2px;
 }
+/*  */
+/* div.navbar { */
+/* } */
+
+div#upper-navbar#lower-navbar {
+  
+}
+
+header#navigation {
+  position:relative;
+  height: 80px;
+  border-top: 5px solid rgb(146, 209, 61);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
