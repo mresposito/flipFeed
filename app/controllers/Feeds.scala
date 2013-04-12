@@ -24,29 +24,18 @@ object Feeds extends Controller with Secured {
   )
 
   /*
-   * display user's dashboard
-   */
-  def index = IsAuthenticated { username => _ => 
-    User.findByEmail(username).map { user =>
-      Ok(
-        html.dashboard(user, Feed.findByAuthor(user), createFeedForm)
-      )
-    }.getOrElse(Forbidden)
-  }
-
-  /*
-   * add a new feeodback page
+   * add a new feedback page
    */
   def add = IsAuthenticated { username => implicit request =>
     User.findByEmail(username).map { user =>
       createFeedForm.bindFromRequest.fold(
         formWithErrors => {
-          BadRequest(html.dashboard( user, Feed.findByAuthor(user), formWithErrors ))
+          BadRequest(html.users.index( user, Feed.findByAuthor(user), formWithErrors ))
         },
         feed => {
           val fd = Feed( Id(0), feed._1, feed._2, false, user.name  )
           Feed.create ( fd )
-          Redirect(routes.Feeds.index)
+          Redirect(routes.Users.profile)
         }
       )
     }.getOrElse(Forbidden)
@@ -60,24 +49,6 @@ object Feeds extends Controller with Secured {
       Feed.findByOwnerName( owner, name ).map { feed =>
         Ok(html.feeds.index( user, feed, Comment.findByFeed ( feed.id.get ) ) )
       }.getOrElse(NotFound)
-    }.getOrElse(Forbidden)
-  }
-
-  /*
-   * browse people's profile. If the name is the same as in the session, then
-   * redirect do dashboard.
-   */
-
-  def browseProfile( name:String ) = IsAuthenticated { username => _ =>
-    User.findByEmail( username ). map { user =>
-      if ( user.name == name ) { // redirect to normal dashboard
-        Redirect(routes.Feeds.index)
-      }
-      else { // find user's profile and render it.
-        User.findByName( name ). map { profile =>
-          Ok( html.dashboard( profile, Feed.findByAuthor( profile ), createFeedForm ) )
-        }.getOrElse(NotFound)
-      }
     }.getOrElse(Forbidden)
   }
 

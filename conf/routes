@@ -13,13 +13,13 @@ GET    /createUser                    controllers.Auth.createUser
 POST   /createUser                    controllers.Auth.newUser
 
 # Feedbacks pages ( called feeds )
-GET   /dashboard                      controllers.Feeds.index
 POST  /addFeed                        controllers.Feeds.add
 GET   /:owner/validName               controllers.Feeds.validName( owner:String )
 GET   /:owner/:name                   controllers.Feeds.display(owner:String, name: String)
 POST  /:owner/:name                   controllers.Feeds.commentOn(owner:String, name: String)
 
-GET   /:name                          controllers.Feeds.browseProfile( name:String )
+GET   /:name                          controllers.Users.index( name:String )
+GET   /profile                        controllers.Users.profile
 
 # Javascript routing
 GET     /assets/javascripts/routes    controllers.Application.javascriptRoutes
