@@ -8,7 +8,22 @@ import anorm.SqlParser._
 
 case class Comment(  id:Pk[Long], text:String, anon:Boolean, feed:Long, author:String )
 
-object Comment {
+object Comment extends DatabaseItem {
+
+  // - Inheritance properties
+  type T    = Comment
+  def table = "cmment"
+
+  def singleResult( set:SimpleSql[Row] ): Option[Comment] = 
+    DB.withConnection { implicit connection =>
+      set.as(Comment.simple.singleOpt)
+    }
+
+  def multipleResults( set:SimpleSql[Row] ): Seq[Comment] = 
+    DB.withConnection { implicit connection =>
+      set.as(Comment.simple * )
+    }
+  
   
   // - Parsers
 
@@ -28,49 +43,9 @@ object Comment {
 
   // - Queries
 
-  def findById(id:Long    ): Option[Comment] = findById( Id(id) )
-
-  def findById(id:Pk[Long]): Option[Comment] = {
-    DB.withConnection { implicit connection =>
-      SQL("select * from cmment where id = {id}").on(
-        'id -> id
-      ).as(Comment.simple.singleOpt)
-    }
-  }
-
-  def findAll: Seq[Comment] = {
-    DB.withConnection { implicit connection =>
-        SQL( " select * from cmment ").as(Comment.simple *)
-    }
-  }
-
-  def findByFeed( id:Long   ): Seq[Comment] = {
-      DB.withConnection { implicit connection =>
-        SQL(
-          """
-          select * from cmment
-          where feed = {id}
-          """
-        ).on(
-        'id -> id
-      ).as(Comment.simple *)
-    }
-  }
-
-  def findByAuthor( user:User   ): Seq[Comment] = findByAuthor( user.name )
-
-  def findByAuthor( author:String ): Seq[Comment] = {
-      DB.withConnection { implicit connection =>
-        SQL(
-          """
-          select * from cmment
-          where author = {author}
-          """
-        ).on(
-        'author -> author
-      ).as(Comment.simple *)
-    }
-  }
+  def findByFeed( id       : Long   ) : Seq[Comment] = findSeqByAttr ( "feed", id )
+  def findByAuthor( user   : User   ) : Seq[Comment] = findByAuthor( user.name )
+  def findByAuthor( author : String ) : Seq[Comment] = findSeqByAttr ( "author", author )
 
   /*
    * update the text project
@@ -103,14 +78,6 @@ object Comment {
       ).executeUpdate()
 
       comment.copy( id=Id(id) )
-    }
-  }
-
-  def delete( id:Long ) = {
-    DB.withConnection{ implicit connection =>
-      SQL("delete from cmment where id = {id}").on(
-        'id-> id
-      ).executeUpdate()
     }
   }
 }

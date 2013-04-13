@@ -18,7 +18,16 @@ create table feed (
 );
 
 create sequence feed_seq start with 1000;
+create sequence element_seq start with 1000;
 create sequence cmment_seq start with 1000;
+
+create table element (
+  id                        bigint not null primary key,
+  feedId                    bigint,
+  kind                      varchar(50),
+  attrb                     varchar(1000),
+  foreign key(feedId)       references feed(id) on delete cascade
+);
 
 create table cmment ( 
   id                        bigint not null primary key,
@@ -34,6 +43,8 @@ create table cmment (
 
 drop table if exists cmment;
 drop sequence if exists cmment_seq;
+drop table if exists element;
+drop sequence if exists element_seq;
 drop table if exists feed;
 drop sequence if exists feed_seq;
 drop table if exists user;

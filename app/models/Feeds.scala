@@ -8,7 +8,20 @@ import anorm.SqlParser._
 
 case class Feed( id:Pk[Long], name:String, description:String, anon:Boolean, owner: String )
 
-object Feed {
+object Feed extends DatabaseItem {
+
+  type T    = Feed
+  def table = "feed"
+
+  def singleResult( set:SimpleSql[Row] ): Option[Feed] = 
+    DB.withConnection { implicit connection =>
+      set.as(Feed.simple.singleOpt)
+    }
+
+  def multipleResults( set:SimpleSql[Row] ): Seq[Feed] = 
+    DB.withConnection { implicit connection =>
+      set.as(Feed.simple * )
+    }
   
   // - Parsers
 
@@ -29,36 +42,8 @@ object Feed {
 
   // - Queries
 
-  def findById(id:Long    ): Option[Feed] = findById( Id(id) )
-
-  def findById(id:Pk[Long]): Option[Feed] = {
-    DB.withConnection { implicit connection =>
-      SQL("select * from feed where id = {id}").on(
-        'id -> id
-      ).as(Feed.simple.singleOpt)
-    }
-  }
-
-  def findAll: Seq[Feed] = {
-    DB.withConnection { implicit connection =>
-        SQL( " select * from feed ").as(Feed.simple *)
-    }
-  }
-
   def findByAuthor( user:User   ): Seq[Feed] = findByAuthor( user.name )
-
-  def findByAuthor( user:String ): Seq[Feed] = {
-      DB.withConnection { implicit connection =>
-        SQL(
-          """
-          select * from feed
-          where owner = {user}
-          """
-        ).on(
-        'user -> user
-      ).as(Feed.simple *)
-    }
-  }
+  def findByAuthor( user:String ): Seq[Feed] = findSeqByAttr( "owner", user )
 
   def findByOwnerName( user:String, name:String ): Option[Feed] = {
       DB.withConnection { implicit connection =>
@@ -105,22 +90,6 @@ object Feed {
       ).executeUpdate()
 
       feed.copy( id=Id(id) )
-    }
-  }
-
-  def delete( id:Long ) = {
-    DB.withConnection{ implicit connection =>
-      SQL("delete from feed where id = {id}").on(
-        'id-> id
-      ).executeUpdate()
-    }
-  }
-
-  def deleteByOwner ( owner:String  ) = {
-    DB.withConnection{ implicit connection =>
-      SQL("delete from feed where owner = {owner}").on(
-        'owner-> owner
-      ).executeUpdate()
     }
   }
 }

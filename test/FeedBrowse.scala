@@ -62,7 +62,7 @@ class FeedBrowser extends Specification {
       }
     }
 
-    "create new feed" in {
+    "Comment on feed" in {
       running(TestServer(3333), HTMLUNIT) { browser =>
         browser.goTo("http://localhost:3333/")
         browser.$("#email").text("michele@sample.com")

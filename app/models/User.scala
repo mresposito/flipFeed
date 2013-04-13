@@ -8,7 +8,20 @@ import anorm.SqlParser._
 
 case class User(email:String, name:String, password:String)
 
-object User {
+object User extends DatabaseItem {
+
+  type T = User
+  def table = "user"
+
+  def singleResult( set:SimpleSql[Row] ): Option[User] = 
+    DB.withConnection { implicit connection =>
+      set.as(User.simple.singleOpt)
+    }
+
+  def multipleResults( set:SimpleSql[Row] ): Seq[User] = 
+    DB.withConnection { implicit connection =>
+      set.as(User.simple * )
+    }
 
     // -- Parsers
 
@@ -28,25 +41,8 @@ object User {
 
   def findByName (name : String): Option[User] = findByAttr("name", name.toLowerCase)
   def findByEmail(email: String): Option[User] = findByAttr("email", email )
-
-  def findByAttr( key:String, value:String ):Option[User] = {
-    DB.withConnection { implicit connection =>
-      SQL("select * from user where "+ key + " = {val}").on(
-        'val -> value
-      ).as(User.simple.singleOpt)
-    }
-  }
-
   def findName ( email: String ): Option[String] = Option( findByEmail(email).get.name )
 
-  /**
-   * Retrieve all users.
-   */
-  def findAll: Seq[User] = {
-    DB.withConnection { implicit connection =>
-      SQL("select * from user").as(User.simple *)
-    }
-  }
   
   /**
    * Authenticate a User.

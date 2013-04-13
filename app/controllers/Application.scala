@@ -18,7 +18,8 @@ object Application extends Controller {
     import routes.javascript._
     Ok(
       Routes.javascriptRouter("jsRoutes") (
-        Feeds.add, Feeds.validName 
+        Feeds.add, Feeds.validName,
+        Elements.add
       )
     ).as("text/Javascript")
   }
