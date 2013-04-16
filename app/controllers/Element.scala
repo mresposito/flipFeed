@@ -39,7 +39,7 @@ object Elements extends Controller with Secured {
   def display( owner: String, name:String ) = IsAuthenticated { username => _ =>
     User.findByEmail(username).map { user =>
       Feed.findByOwnerName( owner, name ).map { feed =>
-        Ok(html.feeds.index( user, feed, Comment.findByFeed ( feed.id.get ) ) )
+        Ok(html.feeds.index( user, feed ) )
       }.getOrElse(NotFound)
     }.getOrElse(Forbidden)
   }

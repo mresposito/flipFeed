@@ -30,6 +30,10 @@ class AuthenticationBrowser extends Specification {
         browser.getCookies().size must equalTo(1)
         browser.goTo("http://localhost:3333/")
         browser.url must equalTo("http://localhost:3333/")
+
+        browser.goTo("http://localhost:3333/sandra")
+        browser.pageSource must contain("michele")
+        browser.pageSource must contain("sandra")
     }
   }
 

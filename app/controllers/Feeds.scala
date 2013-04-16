@@ -18,8 +18,7 @@ object Feeds extends Controller with Secured {
   val createFeedForm = Form (
     tuple(
         "name"  -> nonEmptyText,
-        "description"-> text,
-        "anon"-> text
+        "description"-> text
     )
   )
 
@@ -30,12 +29,12 @@ object Feeds extends Controller with Secured {
     User.findByEmail(username).map { user =>
       createFeedForm.bindFromRequest.fold(
         formWithErrors => {
-          BadRequest(html.users.index( user, Feed.findByAuthor(user), formWithErrors ))
+          BadRequest(html.users.index( user, user ))
         },
         feed => {
           val fd = Feed( Id(0), feed._1, feed._2, false, user.name  )
           Feed.create ( fd )
-          Redirect(routes.Users.profile)
+          Redirect(routes.Users.index( user.name ))
         }
       )
     }.getOrElse(Forbidden)
@@ -47,7 +46,7 @@ object Feeds extends Controller with Secured {
   def display( owner: String, name:String ) = IsAuthenticated { username => _ =>
     User.findByEmail(username).map { user =>
       Feed.findByOwnerName( owner, name ).map { feed =>
-        Ok(html.feeds.index( user, feed, Comment.findByFeed ( feed.id.get ) ) )
+        Ok(html.feeds.index( user, feed ) )
       }.getOrElse(NotFound)
     }.getOrElse(Forbidden)
   }

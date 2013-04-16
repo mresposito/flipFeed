@@ -1,4 +1,4 @@
-@( user:User, feed: Feed, commentsList: Seq[Comment] )
+@( user:User, feed: Feed )
 
 @import helper.twitterBootstrap._
 
@@ -27,7 +27,7 @@
 
       <div class="tab-pane fade" id="comments">
         <!--display the comments -->
-        @feeds.listComments( commentsList )
+        @feeds.listComments( Comment.findByFeed ( feed.id.get ))
 
         @if( user.name != feed.owner ) {
 
@@ -42,84 +42,9 @@
 
       </div>
       <div class="tab-pane fade" id="edit">
-        <h3> Personalize feedback page</h3>
-        <div id="personalize">
-          <div id="showElements"> 
-            <p> No element currently selected. </p>
-          </div>
-
-          <a href="#addElementModal" class="btn btn-success" id="addFeedInstance" role="button" data-toggle="modal">
-            <i icon="icon-plus"></i> Add element
-          </a>
-        </div>
-
-        <h3> Comment wall </h3>
-        <div id="commentWallPref">
-          <form class="commentPref" action="#">
-            <ul class="unstyled">
-              <label class="checkbox">
-                <li> <input type="checkbox" name="showWall" value="true">Show comment wall </li>
-                <li> <input type="checkbox" name="anon" value="false">Make wall anonymous </li>
-                <li> <input type="checkbox" name="single" value="false">Require single post </li>
-              <label class="checkbox">
-            </ul>
-          </form>
-        </div>
-        <h3> Privacy options </h3>
-        <form class="privacy" action="#">
-          <label class="radio">
-            <input type="radio" name="privacy" value="invite">Invite only<br>
-            <input type="radio" name="privacy" value="link">Link only<br>
-            <input type="radio" name="privacy" value="open" checked>Public<br>
-          </label>
-        </form>
-        
+        @feeds.edit( feed )
       </div> <!--end edit-->
     </div>
-
-
-
-    <!-- Modal -->
-    <div id="addElementModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addElementModalLabel" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="addElementModalLabel">Add Feedback Element<h3>
-    </div>
-    <div class="modal-body">
-    <h3>Enter question, description and type</h3>
-
-    <form id="addFeedElement" action="#">
-      <div class="control-group">
-        <div class="controls">
-          <input class="input-large" type="text" name="question" placeholder="Question" id="question"> <br>
-          <textarea rows="2" name="description" placeholder="Description" id="description"></textarea> <br>
-          Type: <br>
-          <select id="formType">
-            <option value="openQuest">Open Question</option>
-            <option value="slider">Slider</option>
-            <option value="mulChoice">Multiple choice</option>
-            <option value="select">Select</option>
-          </select>
-        </div>
-      </div>
-      
-      <h3>See how it looks:</h3>
-      <div id="render">
-        <h5 id="question"> Is this a good website? </h5>
-        <p id="description">Please, let me know how I can improve it</p>
-        <div id=type>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <div class="form-action">
-          <button class="btn" type="reset" data-dismiss="modal" aria-hidden="true">Cancel</button>
-          <button class="btn btn-primary" type="submit" id="createbutton">Create</button>
-        </div>
-      </div> <!--end modal footer-->
-      
-    </form>
-  </div> <!-- end modal -->
 
    <script>
      <!-- activate the tabs -->

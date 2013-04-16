@@ -1,12 +1,12 @@
-@( user: User, fds:Seq[Feed], form:Form[(String,String,String)])
+@( loggedUser: User, ownerUser:User )
 
-@main("FlipFeed dashboard", user) {
+@main("FlipFeed dashboard", loggedUser) {
   <div class="row"> 
 
     <!-- DASHBOARD CORE -->
 
     <div class="span3"> 
-      <h3>@user.name</h3>
+      <h3>@ownerUser.name</h3>
       Feeds recieved: 2
     </div>
 
@@ -23,7 +23,7 @@
         </div>
       </div>
     
-      @feeds.listFeed( fds )
+      @feeds.listFeed( Feed.findByAuthor( ownerUser ) )
    
     </div>
 
@@ -43,25 +43,15 @@
     <div class="modal-body">
     <h3>Enter name and description</h3>
 
-    @helper.form( routes.Feeds.add, 'id-> "newFeedForm") {
-      @form.globalError.map { error =>
-        <p class="error">
-          @error.message
-      }
+    <form action="@routes.Feeds.add" id="newFeedForm" method="POST">
       <div class="control-group">
         <p>
         <div class="controls">
           <label class="control-label" for="name">New Name</label>
-          <input class="editFeedName" type="text" name="name" placeholder="Name" id="name" value="@form("name").value">
+          <input class="editFeedName" type="text" name="name" placeholder="Name" id="name" value="">
         <div>
         </p>
-        <p>
-          <input type="text" name="description" placeholder="Description" id="description">
-        </p>
-        <p>
-         <label class="checkbox">
-          <input type="checkbox" name="anon" value="anon" >Anonymous wall
-        </label>
+        <p> <input type="text" name="description" placeholder="Description" id="description"> </p>
         </div>
       </div>
       <div class="modal-footer">
@@ -70,8 +60,8 @@
           <button class="btn btn-primary" type="submit" id="createbutton">Create</button>
         </div>
       </div>
-    }
-    </div>
+    </form>
+  </div>
   </div> <!-- end modal -->
 
   </div> <!-- end row -->
