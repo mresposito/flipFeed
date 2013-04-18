@@ -93,5 +93,9 @@ class @EditElement extends EditBase
       kind: $("select#formType").val()
       attrb: @getAttr()
 
+    newModel.save
+      success: (el) -> console.log("Saved successfully")
+
     new ElementView
       model: newModel
+

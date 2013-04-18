@@ -5,7 +5,7 @@
 feedNumber = $("#feedBackId").attr("value")
 
 class @ElementModel extends Backbone.Model
-  urlRoot: jsRoutes.controllers.Elements.add(feedNumber),
+  urlRoot: jsRoutes.controllers.Elements.add().url,
 
   defaults:
     feedId: null,

@@ -14,27 +14,15 @@ import play.api.libs.json._
 
 object Elements extends Controller with Secured {
 
-  val createElement = Form (
-    tuple (
-      "feedId" -> nonEmptyText,
-      "name" -> text,
-      "description" -> text,
-      "kind" -> nonEmptyText,
-      "attrb" -> nonEmptyText
-    )
-  )
-  /*
-   * add a new feedback page
-   */
-  def add = IsAuthenticated { username => implicit request =>
-    createElement.bindFromRequest.fold(
-      formWithErrors => BadRequest,
-      element => {
-        val  el = Element( Id(0), element._1.toLong, element._2, element._3 , element._4  , element._5 )
-        Element.create ( el )
-        Redirect(routes.Users.profile)
-      }
-    )
+  def add = Action(parse.json) { request =>
+    (request.body).asOpt[Map[String,String]].map { json =>
+      Ok( Json.toJson( Map ( 
+        "id" ->  Element.create( Element(
+          Id(0), json("feedId").toLong, json("name"),
+          json("description"), json("kind"), json("attr")
+          ) ).id.get
+       ) ) )
+    }.getOrElse(BadRequest( "Not valid format "))
   }
 
   /*

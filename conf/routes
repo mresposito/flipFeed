@@ -19,8 +19,8 @@ GET   /:owner/:name                   controllers.Feeds.display(owner:String, na
 POST  /:owner/:name                   controllers.Feeds.commentOn(owner:String, name: String)
 
 # Elements in Feedback
-POST  /addElements                    controllers.Elements.add
 GET   /feed/:id/elements              controllers.Elements.findByFeed( id:Long )
+POST  /element                        controllers.Elements.add
 
 # profiles
 GET   /:name                          controllers.Users.index( name:String )
