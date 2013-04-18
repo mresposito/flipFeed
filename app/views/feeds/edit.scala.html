@@ -1,5 +1,7 @@
 @( feed: Feed )
 
+<div id="feedBackId" value="@feed.id.get"></div>
+
 <h3> Personalize feedback page</h3>
 <div id="personalize">
   <div id="showElements"> 
@@ -35,8 +37,6 @@
   </div> <!--end edit-->
 </div>
 
-
-
 <!-- Modal -->
 <div id="addElementModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addElementModalLabel" aria-hidden="true">
   <div class="modal-header">
@@ -46,35 +46,76 @@
       <div class="modal-body">
         <h3>Enter question, description and type</h3>
 
-        <form id="addFeedElement" action="#">
+        <div id="addFeedElement" action="#">
           <div class="control-group">
             <div class="controls">
-              <input class="input-large" type="text" name="question" placeholder="Question" id="question"> <br>
-              <textarea rows="2" name="description" placeholder="Description" id="description"></textarea> <br>
+              <input class="input-large" type="text" name="question" placeholder="Question?" id="question" value="Question?"> <br>
+              <textarea rows="2" name="description" placeholder="I have one" id="description" value="Please, tell me!"></textarea> <br>
               Type: <br>
               <select id="formType">
-                <option value="openQuest">Open Question</option>
+                <option value="openQuest" selected>Open Question</option>
                 <option value="slider">Slider</option>
                 <option value="mulChoice">Multiple choice</option>
                 <option value="select">Select</option>
               </select>
-            </div>
-          </div>
 
-          <h3>See how it looks:</h3>
-          <div id="render">
-            <h5 id="question"> Is this a good website? </h5>
-            <p id="description">Please, let me know how I can improve it</p>
-            <div id=type>
-            </div>
-          </div>
+              <div id="slideVals">
+                <select id="from" class="input-mini">
+                  <option>0</option>
+                  <option>1</option>
+                </select>
+                To: 
+                <select name="to" id="to" class="input-mini">
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option selected="selected">9</option>
+                  <option>10</option>
+                </select> <br>
+                <div id="labelToContainer"> 
+                  <label id="from"> </label>
+                  <input class="input-medium" type="text" placeholder="Label (Optional)" id="labelFrom"> <br>
+                </div>
+                <div id="labelFromContainer"> 
+                  <label id="to"> </label>
+                  <input class="input-medium" type="text" placeholder="Label (Optional)" id="labelTo"> <br>
+                </div>
+              </div> <!--end slideVals-->
 
-          <div class="modal-footer">
-            <div class="form-action">
-              <button class="btn" type="reset" data-dismiss="modal" aria-hidden="true">Cancel</button>
-              <button class="btn btn-primary" type="submit" id="createbutton">Create</button>
-            </div>
-          </div> <!--end modal footer-->
+              <div id="inputLabels">
+                <ul class="table" id="trueOptions"> 
+                  <li id="firstEl"> 
+                  <input class="input-medium opts" type="text" placeholder="Option 1" id="1" value="Option 1"> 
+                  </li>
+                </ul>
 
-        </form>
-      </div> <!-- end modal -->
+                <ul class="table"> 
+                  <li>
+                  <input class="input-medium opts" type="text" placeholder="Add other option" id="addOption" > 
+                  </li>
+                </ul>
+              </div> <!--end inputLabels-->
+
+              @*
+              <hr size="1">
+              <div id="render"> 
+                <h5 id="question"> Question? </h5>
+                <p id="description">I have one</p>
+                <div id="type"> </div>
+              </div>
+              <hr size="1">
+              *@
+
+              <div class="modal-footer">
+                <div class="form-action">
+                  <button class="btn" type="reset" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                  <button class="btn btn-primary" data-dismiss="modal" type="submit" id="createbutton">Create</button>
+                </div>
+              </div> <!--end modal footer-->
+
+            </div>
+          </div> <!-- end modal -->

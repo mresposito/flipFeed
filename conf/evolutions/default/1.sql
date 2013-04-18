@@ -24,8 +24,10 @@ create sequence cmment_seq start with 1000;
 create table element (
   id                        bigint not null primary key,
   feedId                    bigint,
+  name                      varchar(100),
+  description               varchar(1000),
   kind                      varchar(50),
-  attrb                     varchar(1000),
+  attrb                     varchar(3000),
   foreign key(feedId)       references feed(id) on delete cascade
 );
 

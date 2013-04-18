@@ -52,5 +52,17 @@ object InitialData {
         ).foreach( Comment.create )
       }
     }
+
+    if( Element.findAll.isEmpty ) {
+      Feed.findByAuthor( "michele" ). map { feed =>
+        Seq(
+          Element(Id(1), feed.id.get, "Am I good?", "Please, tell me", "openQuest", ""),
+          Element(Id(2), feed.id.get, "sure...", "now!", "openQuest", ""),
+          Element(Id(3), feed.id.get, "Slide", "tell me baby", "slider", "{ \"min\": 1, \"max\": 10 }"),
+          Element(Id(4), feed.id.get, "Multiple?", "Please, select all", "mulChoice", "[\"first\", \"second\", \"third\"]"),
+          Element(Id(5), feed.id.get, "Which one?", "Please, select one", "select", "[\"first\", \"second\", \"third\"]")
+        ).foreach( Element.create )
+      }
+    }
   }
 }

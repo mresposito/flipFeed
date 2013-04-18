@@ -7,7 +7,7 @@ import anorm._
 import anorm.SqlParser._
 
 
-case class Element( id:Pk[Long], feedId: Long, kind:String, attributes:String) 
+case class Element( id:Pk[Long], feedId: Long, name:String, description:String, kind:String, attr:String) 
 
 object Element extends DatabaseItem  {
 
@@ -29,15 +29,17 @@ object Element extends DatabaseItem  {
   val simple = {
       get[Pk[Long]]( table + ".id") ~
       get[Long]    ( table + ".feedId") ~
+      get[String]  ( table + ".name") ~
+      get[String]  ( table + ".description") ~
       get[String]  ( table + ".kind") ~
       get[String]  ( table + ".attrb")  map {
-        case id~feedId~kind~attributes => Element( id, feedId, kind, attributes )
+        case id~feedId~name~description~kind~attr => Element( id, feedId, name, description, kind, attr )
       }
   }
 
   // - Queries
 
-  def findByFeed ( feed : Long): Seq[Element] = findSeqByAttr ( "feedId", feed )
+  def findByFeed ( feed : Long ): Seq[Element] = findSeqByAttr ( "feedId", feed )
   
   /**
    * Create a Element.
@@ -51,14 +53,16 @@ object Element extends DatabaseItem  {
       SQL(
         """
           insert into element values (
-            {id}, {feedId}, {kind}, {attrb}
+            {id}, {feedId}, {name}, {description}, {kind}, {attrb}
           )
         """
       ).on(
-        'id     -> id,
-        'feedId-> element.feedId,
-        'kind  -> element.kind,
-        'attrb -> element.attributes
+        'id          -> id,
+        'feedId      -> element.feedId,
+        'name        -> element.name,
+        'description -> element.description,
+        'kind        -> element.kind,
+        'attrb       -> element.attr
       ).executeUpdate()
       
       element.copy ( id = Id(id) )

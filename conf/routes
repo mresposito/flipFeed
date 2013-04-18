@@ -17,9 +17,12 @@ POST  /addFeed                        controllers.Feeds.add
 GET   /:owner/validName               controllers.Feeds.validName( owner:String )
 GET   /:owner/:name                   controllers.Feeds.display(owner:String, name: String)
 POST  /:owner/:name                   controllers.Feeds.commentOn(owner:String, name: String)
+
 # Elements in Feedback
 POST  /addElements                    controllers.Elements.add
+GET   /feed/:id/elements              controllers.Elements.findByFeed( id:Long )
 
+# profiles
 GET   /:name                          controllers.Users.index( name:String )
 GET   /profile                        controllers.Users.profile
 

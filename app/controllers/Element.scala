@@ -10,11 +10,15 @@ import anorm._
 import models._
 import views._
 
+import play.api.libs.json._
+
 object Elements extends Controller with Secured {
 
   val createElement = Form (
     tuple (
       "feedId" -> nonEmptyText,
+      "name" -> text,
+      "description" -> text,
       "kind" -> nonEmptyText,
       "attrb" -> nonEmptyText
     )
@@ -26,13 +30,27 @@ object Elements extends Controller with Secured {
     createElement.bindFromRequest.fold(
       formWithErrors => BadRequest,
       element => {
-        val  el = Element( Id(0), element._1.toLong, element._2, element._3  )
+        val  el = Element( Id(0), element._1.toLong, element._2, element._3 , element._4  , element._5 )
         Element.create ( el )
         Redirect(routes.Users.profile)
       }
     )
   }
 
+  /*
+   * serve all the feeds by ID in JSON
+   */
+  def findByFeed ( feedId: Long ) = Action {
+    Ok(
+      Json.toJson( Element.findByFeed ( feedId ).map { el =>
+        Map (
+          "id"   -> el.id.get.toString , "feedId"      -> el.feedId.toString ,
+          "name" -> el.name           , "description" -> el.description      ,
+          "kind" -> el.kind           , "attr"        -> el.attr
+        )
+      } ) )
+  }
+    
   /*
    * display a particular feed
    */

@@ -19,7 +19,7 @@ object Application extends Controller {
     Ok(
       Routes.javascriptRouter("jsRoutes") (
         Feeds.add, Feeds.validName,
-        Elements.add
+        Elements.add, Elements.findByFeed
       )
     ).as("text/Javascript")
   }

@@ -1,0 +1,17 @@
+@( elements: Seq[Element] )
+
+@if( ! elements.isEmpty ) { 
+  <ul class="table">
+    @elements.map { element =>
+
+    <li class="fTableEntry">
+      <hr size=1> 
+      <br>
+      @element.feedId
+    </li>
+    }
+    <hr size=1> 
+  </ul><br>
+} else {
+  The feedback page is currently empty.
+}
