@@ -21,6 +21,7 @@ POST  /:owner/:name                   controllers.Feeds.commentOn(owner:String, 
 # Elements in Feedback
 GET   /feed/:id/elements              controllers.Elements.findByFeed( id:Long )
 POST  /element                        controllers.Elements.add
+POST  /comment                        controllers.Elements.comment
 
 # profiles
 GET   /:name                          controllers.Users.index( name:String )

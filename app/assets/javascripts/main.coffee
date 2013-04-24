@@ -36,6 +36,11 @@ $ -> # document is ready!
     new ElementView
       model: element
 
+  $("#sendForm").bind("click", (el) ->
+    elemViews. map ( comment ) ->
+      comment.sendForm()
+  )
+
   # collection links back to our view
   elem = new EditElement
     el: $("#addFeedElement")

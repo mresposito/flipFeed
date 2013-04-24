@@ -50,12 +50,6 @@ object Elements extends Controller with Secured {
     }.getOrElse(Forbidden)
   }
 
-  val commentOnForm = Form (
-    tuple(
-      "comment" -> text,
-      "anon" ->text
-    )
-  )
   /*
    * logic to comment on a certain post
    */
@@ -65,11 +59,25 @@ object Elements extends Controller with Secured {
       Form("comment"->nonEmptyText).bindFromRequest.fold(
           errors  => BadRequest,
           comment => { // register che comment
-            Comment.create( Comment( Id(0), comment, false, post.id.get, poster.name ) )
+            Comment.create( Comment( Id(0), comment, "openQuest", post.id.get, poster.name ) )
             Redirect( routes.Feeds.display( owner, feed ) )
           }
         )
       }.getOrElse(NotFound)
     }.getOrElse(NotFound)
+  }
+
+  /*
+   * logic to comment on a certain post
+   */
+  def comment = Action (parse.json) { request =>
+    (request.body).asOpt[Map[String,String]].map { json =>
+      Ok( Json.toJson( Map (
+        "id" ->  Comment.create( Comment(
+          Id(0)               , json("value") , json("kind") ,
+          json("form").toLong , json("author")
+          ) ).id.get
+       ) ) )
+    }.getOrElse(BadRequest( "Not valid format "))
   }
 }

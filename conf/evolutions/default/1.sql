@@ -33,11 +33,11 @@ create table element (
 
 create table cmment ( 
   id                        bigint not null primary key,
-  text                      varchar(500),
-  anon                      boolean,
-  feed                      bigint,
+  elementId                 bigint,
+  value                     varchar(500),
+  kind                      varchar(500),
   author                    varchar(255),
-  foreign key(feed)         references feed(id) on delete cascade,
+  foreign key(elementId)    references element(id) on delete cascade,
   foreign key(author)       references user(name) on delete cascade
 );
 

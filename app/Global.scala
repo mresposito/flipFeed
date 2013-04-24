@@ -37,24 +37,8 @@ object InitialData {
       ).foreach(Feed.create)
     }
 
-    if(Comment.findAll.isEmpty ) {
-      Feed.findByAuthor ( "michele" ).map { feed =>
-        Seq(
-          Comment(Id(1), "THis is great!!"   , false, feed.id.get, feed.owner ),
-          Comment(Id(2), "THis too, its nice", true , feed.id.get, feed.owner )
-        ).foreach(Comment.create)
-      }
-
-      Feed.findByAuthor ( "sandra" ).map { feed =>
-        Seq(
-          Comment(Id(1), "I agree"       , false, feed.id.get, feed.owner ),
-          Comment(Id(2), "keep it going!", true, feed.id.get, feed.owner )
-        ).foreach( Comment.create )
-      }
-    }
-
     if( Element.findAll.isEmpty ) {
-      Feed.findByAuthor( "michele" ). map { feed =>
+      Feed.findAll. map { feed =>
         Seq(
           Element(Id(1), feed.id.get, "Am I good?", "Please, tell me", "openQuest", ""),
           Element(Id(2), feed.id.get, "sure...", "now!", "openQuest", ""),
@@ -62,6 +46,15 @@ object InitialData {
           Element(Id(4), feed.id.get, "Multiple?", "Please, select all", "mulChoice", "[\"first\", \"second\", \"third\"]"),
           Element(Id(5), feed.id.get, "Which one?", "Please, select one", "select", "[\"first\", \"second\", \"third\"]")
         ).foreach( Element.create )
+      }
+    }
+
+    if(Comment.findAll.isEmpty ) {
+      Element.findAll. map { element =>
+        Seq(
+          Comment(Id(1), "THis is great!!"   , "openQuest", element.id.get, "michele"  ),
+          Comment(Id(2), "THis too, its nice", "openQuest", element.id.get, "michele"  )
+        ).foreach(Comment.create)
       }
     }
   }

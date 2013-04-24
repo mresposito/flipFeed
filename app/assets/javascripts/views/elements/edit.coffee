@@ -5,8 +5,6 @@
 
 class @EditElement extends EditBase
   events:
-    # "change input#question "       :  "changeName"
-    # "change textarea#description " :  "changeDescription"
     "change select#formType"       :  "changeSelect"
     "change select#from"           :  "changeFromLabel"
     "change select#to"             :  "changeToLabel"
@@ -19,12 +17,6 @@ class @EditElement extends EditBase
     @changeSelect   ( null )
     @changeFromLabel( null )
     @changeToLabel  ( null )
-
-  # changeName: (e) ->
-  #   # alert( e )
-  #   $("h5#question").text( $("input#question").val() )
-  # changeDescription: (e) ->
-  #   $("p#description").text( $("textarea#description").val() )
   
   changeSelect: (e) ->
     # reset the form
@@ -78,11 +70,7 @@ class @EditElement extends EditBase
     JSON.stringify data
 
   getLabels: ->
-    console.log ( "gettin labels" )
-    console.log $( "#trueOptions > li > input" ).map ( li ) ->
-      li.val()
-
-    ["one", "two", "three"]
+    $(".options").map (el)-> el
 
   saveModel: ( ev ) ->
     console.log("saving")
@@ -98,4 +86,3 @@ class @EditElement extends EditBase
 
     new ElementView
       model: newModel
-

@@ -66,7 +66,7 @@ object Feeds extends Controller with Secured {
       Form("comment"->nonEmptyText).bindFromRequest.fold(
           errors  => BadRequest,
           comment => { // register che comment
-            Comment.create( Comment( Id(0), comment, false, post.id.get, poster.name ) )
+            Comment.create( Comment( Id(0), comment, "openQuest", post.id.get, poster.name ) )
             Redirect( routes.Feeds.display( owner, feed ) )
           }
         )

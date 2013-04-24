@@ -15,10 +15,7 @@
     *@
 
     <div class="span11">
-      @comment.text <br>
-      @if( ! comment.anon ) {
-        <a href="@routes.Users.index("@comment.author")">@comment.author</a>
-      }
+      @comment.value <br>
     </div>
   </div>
   </li>

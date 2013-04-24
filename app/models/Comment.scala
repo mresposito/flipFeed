@@ -6,7 +6,7 @@ import play.api.Play.current
 import anorm._
 import anorm.SqlParser._
 
-case class Comment(  id:Pk[Long], text:String, anon:Boolean, feed:Long, author:String )
+case class Comment(  id:Pk[Long], value:String, kind:String, form:Long, author:String )
 
 object Comment extends DatabaseItem {
 
@@ -28,31 +28,32 @@ object Comment extends DatabaseItem {
   // - Parsers
 
   /*
-   * Parses a feed from result set
+   * Parses a form from result set
    */
   val simple = {
     get[Pk[Long]]("cmment.id") ~
-    get[String]("cmment.text") ~
-    get[Boolean]("cmment.anon") ~
-    get[Long]("cmment.feed") ~
+    get[String]("cmment.value") ~
+    get[String]("cmment.kind") ~
+    get[Long]("cmment.elementId") ~
     get[String]("cmment.author") map {
-      case id~text~anon~feed~author => 
-        Comment( id, text, anon, feed, author )
+      case id~text~kind~form~author => 
+        Comment( id, text, kind, form, author )
     }
   }
 
   // - Queries
 
-  def findByFeed( id       : Long   ) : Seq[Comment] = findSeqByAttr ( "feed", id )
+  def findByFeed( id       : Long   ) : Seq[Comment] = findSeqByAttr ( "elementId", id )
+  def findByForm( id       : Long   ) : Seq[Comment] = findSeqByAttr ( "elementId", id )
   def findByAuthor( user   : User   ) : Seq[Comment] = findByAuthor( user.name )
   def findByAuthor( author : String ) : Seq[Comment] = findSeqByAttr ( "author", author )
 
   /*
-   * update the text project
+   * update the text in the comment
    */
   def edit( id:Pk[Long], newText:String ) {
     DB.withConnection{ implicit connection =>
-      SQL("update cmment set text = {newText} where id = {id}").on(
+      SQL("update cmment set value = {newText} where id = {id}").on(
         'id -> id, 'newText-> newText
       ).executeUpdate()
     }
@@ -65,16 +66,16 @@ object Comment extends DatabaseItem {
       val id: Long = 
         SQL("select next value for cmment_seq").as(scalar[Long].single)
 
-      // insert new feedback container
+      // insert new formback container
       SQL(
         """ 
           insert into cmment values (
-            {id}, {text}, {anon}, {feed}, {author} 
+            {id}, {elementId}, {text}, {anon}, {author} 
           )
         """
       ).on(
-        'id->id,  'text-> comment.text, 'anon-> comment.anon,
-        'feed-> comment.feed, 'author-> comment.author 
+        'id->id, 'elementId-> comment.form, 'anon-> comment.kind,
+        'text-> comment.value, 'author-> comment.author 
       ).executeUpdate()
 
       comment.copy( id=Id(id) )

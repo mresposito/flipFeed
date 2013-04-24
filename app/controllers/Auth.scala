@@ -53,7 +53,7 @@ object Auth extends Controller {
 
       user => {
           User.create(User(user._1, user._2, user._3))
-          Redirect(routes.Users.profile).withSession("email" -> user._1)
+          Redirect(routes.Users.index(user._2)).withSession("email" -> user._1)
       }
     )
   }
@@ -69,7 +69,9 @@ object Auth extends Controller {
   def authenticate = Action { implicit request =>
     loginForm.bindFromRequest.fold(
       formWithErrors => BadRequest(html.login(formWithErrors)),
-      user => Redirect(routes.Users.profile).withSession("email" -> user._1)
+      user => User.findByEmail( user._1 ).map { usr =>
+        Redirect(routes.Users.index( usr.name )).withSession("email" -> user._1)
+      }.getOrElse(Forbidden)
     )
   }
 

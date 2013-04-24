@@ -19,7 +19,7 @@ class CommentModel extends Specification {
     
     "create" in {
   
-       val fd = Comment(Id(0), "I think you are great!",  false, 1003, "michele")
+       val fd = Comment(Id(0), "I think you are great!",  "openQuest", 1000, "michele")
 
       running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
 
@@ -37,7 +37,7 @@ class CommentModel extends Specification {
         Comment.edit( Id(1000), newText )
         
         Comment.findById(1000). map { m =>
-          m.text must equalTo( newText )
+          m.value must equalTo( newText )
         }.isDefined must equalTo(true)
       }
     }
@@ -50,6 +50,7 @@ class CommentModel extends Specification {
 
     "delete" in {
       running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
+        Comment.findById(1000).isDefined must equalTo(true)
         Comment.delete( 1000 )
         Comment.findById(1000).isDefined must equalTo(false)
       }
