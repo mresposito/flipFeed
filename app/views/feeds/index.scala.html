@@ -8,67 +8,48 @@
     <h1>@feed.name<small> @feed.description</small></h1>
   </div>
 
+
+  <div id="feedBackId" value="@feed.id.get"></div>
+
   @if( user.name != feed.owner ) {
 
   <h3 id="author"> Created by @feed.owner </h3>
-
-  <div class="tabs-flipfeed">
-    <ul id="myTab" class="nav nav-tabs">
-      <li class="active"><a href="#home" data-toggle="tab"><i class="icon-home"></i>Home</a></li>
-      <li><a href="#comments" data-toggle="tab"> <i class="icon-comment"> </i>Comments</a></li>
-    </ul>
-  </div>
-
-  <div id="myTabContent" class="tab-content">
-    <div class="tab-pane fade in active" id="home">
-      <ul class="table" id="viewFeed">
-        <li id="firstEl"></li>
-      </ul>
-    </div>
-
-    <div class="tab-pane fade" id="comments">
-      <!--display the comments -->
-      @feeds.listComments( Comment.findByFeed ( feed.id.get ) )
-
-      <div id="commentForm">
-        <form class="span4" action="@routes.Feeds.commentOn(feed.owner, feed.name)" method="POST">
-          <textarea type="text" rows="3" name="comment" id="comment" required></textarea><br>
-          <input type="checkbox" name="anon" id="anon" value="anon"> Make post anonymous
-          <button class="btn" type="submit" id="commentbutton">Comment</button>
-        </form>
-      </div>
-    </div>
 
     } else { @* your own feedback *@
 
     <div class="tabs-flipfeed">
       <ul id="myTab" class="nav nav-tabs">
         <li class="active"><a href="#home" data-toggle="tab"><i class="icon-home"></i>Home</a></li>
-        <li><a href="#comments" data-toggle="tab"> <i class="icon-comment"> </i>Comments</a></li>
+        <li><a href="#results" data-toggle="tab"> <i class="icon-comment"> </i>Results</a></li>
         <li><a href="#edit" data-toggle="tab"><i class="icon-cog"></i> Edit</a></li>
       </ul>
     </div>
 
     <div id="myTabContent" class="tab-content">
 
+    }
+
       <div class="tab-pane fade in active" id="home">
         <ul class="table" id="viewFeed">
           <li id="firstEl"></li>
         </ul>
-        <button class="btn btn-primary" type="submit" id="sendForm" >Submit</button>
-      </div>
 
-      <div class="tab-pane fade" id="comments">
+        @if( user.name != feed.owner ) {
+          <button class="btn btn-primary" type="submit" id="sendForm" >Submit</button>
+        }
+      </div> <!--end home-->
+
+      @if( user.name == feed.owner ) {
+
+      <div class="tab-pane fade" id="results">
         <!--display the comments -->
-        @feeds.listComments( Comment.findByFeed ( feed.id.get ) )
+        @elements.results( new ResultSet ( feed.id.get ) )
 
       </div>
       <div class="tab-pane fade" id="edit">
         @feeds.edit( feed )
       </div> <!--end edit-->
     </div>
-
-    }
 
     <script>
       <!-- activate the tabs -->
@@ -77,5 +58,8 @@
         $(this).tab('show');
       })
     </script>
+
+      }
   </div> <!-- end feed container-->
-  }
+
+}

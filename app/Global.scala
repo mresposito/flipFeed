@@ -3,6 +3,8 @@ import play.api._
 import models._
 import anorm._
 
+import java.util.Random
+
 object Global extends GlobalSettings {
   
   override def onStart(app: Application) {
@@ -16,6 +18,17 @@ object Global extends GlobalSettings {
  * in the sample application.
  */
 object InitialData {
+
+  def randomSliders( id:Long) :Seq[Comment] =  {
+    val rand = new Random(100)
+    def rec (iters:Int ):Seq[Comment] = {
+      if ( iters == 0 )
+        Seq()
+      else
+        rec( iters -1 ) :+ Comment(Id(2), rand.nextInt(10).toString, "slider", id, "michele" )
+    }
+    rec(  1000 )
+  }
   
   def insert() = {
     
@@ -51,10 +64,15 @@ object InitialData {
 
     if(Comment.findAll.isEmpty ) {
       Element.findAll. map { element =>
-        Seq(
+        (
+          Seq(
           Comment(Id(1), "THis is great!!"   , "openQuest", element.id.get, "michele"  ),
           Comment(Id(2), "THis too, its nice", "openQuest", element.id.get, "michele"  )
-        ).foreach(Comment.create)
+        ) ++ randomSliders( element.id.get)
+    ).foreach( comm => if ( element.kind == comm.kind) {
+            Comment.create( comm )
+          }
+        )
       }
     }
   }

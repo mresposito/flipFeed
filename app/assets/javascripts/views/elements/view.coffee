@@ -46,18 +46,20 @@ class @ElementView extends EditBase
     el.html @templateSelect( labels: @attr )
 
   sendForm: (el) ->
-    if @modelComment == null
-      val = @retrieveAnswer()
-      if val != ""
-        @modelComment = new CommentModel
-          value: val
-          kind: @model.get("kind")
-          form: @model.get("id")
-          author: "michele"
+    # if @modelComment == null
+    val = @retrieveAnswer()
+    if val != ""
+      @modelComment = new CommentModel
+        value: val
+        kind: @model.get("kind")
+        form: @model.get("id")
+        author: "michele"
 
-        @modelComment.save()
-    else
-      @modelComment.update()
+      @modelComment.save()
+    # else
+    #   @modelComment.update()
+
+    # location.reload()
 
   retrieveAnswer: () ->
     kind = @model.get("kind")

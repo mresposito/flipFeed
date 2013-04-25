@@ -1,0 +1,15 @@
+@( res: ResultSet )
+
+<p>
+Current Elements: @res.results.length <br>
+Total number of answers: @res.answers
+</p>
+
+@res.results.map {  result =>
+  <h3> @result.elem.name </h3>
+  <p> Number Answers: @result.comments.length </p>
+  <b> Feedback: </b>
+  @result.results.map { e=>
+  <p> @e</p>
+  }
+}

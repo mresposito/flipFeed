@@ -13,7 +13,8 @@ class Elements extends Backbone.Collection
 
 
 initModel= ->
-  id =  ( $("#feedBackId").attr("value") )
+  id =  $("#feedBackId").attr("value")
+  log ( "id: " + id )
   elems = null
   r = jsRoutes.controllers.Elements.findByFeed( id )
   $.ajax
@@ -26,6 +27,7 @@ initModel= ->
 
     error: (err) ->
       log("Request failed")
+      log ( err )
 
   elems
 

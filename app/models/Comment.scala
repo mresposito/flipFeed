@@ -44,7 +44,7 @@ object Comment extends DatabaseItem {
   // - Queries
 
   def findByFeed( id       : Long   ) : Seq[Comment] = findSeqByAttr ( "elementId", id )
-  def findByForm( id       : Long   ) : Seq[Comment] = findSeqByAttr ( "elementId", id )
+  def findByElement( id       : Long   ) : Seq[Comment] = findSeqByAttr ( "elementId", id )
   def findByAuthor( user   : User   ) : Seq[Comment] = findByAuthor( user.name )
   def findByAuthor( author : String ) : Seq[Comment] = findSeqByAttr ( "author", author )
 

@@ -80,4 +80,6 @@ object Elements extends Controller with Secured {
        ) ) )
     }.getOrElse(BadRequest( "Not valid format "))
   }
+
+  /*def getResultSet( feed:Long ) = ResultSet( feed )*/
 }
