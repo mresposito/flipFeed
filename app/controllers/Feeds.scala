@@ -89,4 +89,12 @@ object Feeds extends Controller with Secured {
       }
     )
   }
+
+  def delete ( id:Long ) = IsAuthenticated { username => _ => 
+    User.findByEmail( username ).map { user => {
+        Feed.delete( id ) 
+        Redirect( routes.Users.index( user.name) )
+      }
+    }.getOrElse(Forbidden)
+  }
 }

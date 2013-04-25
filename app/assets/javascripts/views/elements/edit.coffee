@@ -86,3 +86,6 @@ class @EditElement extends EditBase
 
     new ElementView
       model: newModel
+
+    new ElementListEdit
+      model: newModel

@@ -1,9 +1,17 @@
 @( feed: Feed )
 
+ <style>
+#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; }
+#sortable li span { position: absolute; margin-left: -1.3em; }
+#sortable .elemEditComands { float: right; }
+</style>
+
 <h3> Personalize feedback page</h3>
 <div id="personalize">
   <div id="showElements"> 
-    <p> No element currently selected. </p>
+    <ul id="sortable">
+    </ul>
   </div>
 
   <a href="#addElementModal" class="btn btn-success" id="addFeedInstance" role="button" data-toggle="modal">
@@ -32,88 +40,88 @@
       </label>
     </form>
 
-  </div> <!--end edit-->
+    <a href="#" class="btn btn-danger" id="delete">
+      <i class="icon-trash icon-large"></i> Delete
+    </a>
+
+<div id="dialog" title="Basic dialog">
+<p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>
+    
+
+  </div>
 </div>
 
-<!-- Modal -->
-<div id="addElementModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addElementModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="addElementModalLabel">Add Feedback Element<h3>
-      </div>
-      <div class="modal-body">
-        <h3>Enter question, description and type</h3>
+  <!-- Modal -->
+  <div id="addElementModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addElementModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="addElementModalLabel">Add Feedback Element</h3>
+    </div>
+    <div class="modal-body">
+      <h3>Enter question, description and type</h3>
 
-        <div id="addFeedElement" action="#">
-          <div class="control-group">
-            <div class="controls">
-              <input class="input-large" type="text" name="question" placeholder="Question?" id="question" value="Question?"> <br>
-              <textarea rows="2" name="description" placeholder="I have one" id="description" value="Please, tell me!"></textarea> <br>
-              Type: <br>
-              <select id="formType">
-                <option value="openQuest" selected>Open Question</option>
-                <option value="slider">Slider</option>
-                <option value="mulChoice">Multiple choice</option>
-                <option value="select">Select</option>
+      <div id="addFeedElement" action="#">
+        <div class="control-group">
+          <div class="controls">
+            <input class="input-large" type="text" name="question" placeholder="Question?" id="question" value="Question?"> <br>
+            <textarea rows="2" name="description" placeholder="I have one" id="description" value="Please, tell me!"></textarea> <br>
+            Type: <br>
+            <select id="formType">
+              <option value="openQuest" selected>Open Question</option>
+              <option value="slider">Slider</option>
+              <option value="mulChoice">Multiple choice</option>
+              <option value="select">Select</option>
+            </select>
+
+            <div id="slideVals">
+              <select id="from" class="input-mini">
+                <option>0</option>
+                <option>1</option>
               </select>
-
-              <div id="slideVals">
-                <select id="from" class="input-mini">
-                  <option>0</option>
-                  <option>1</option>
-                </select>
-                To: 
-                <select name="to" id="to" class="input-mini">
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option selected="selected">9</option>
-                  <option>10</option>
-                </select> <br>
-                <div id="labelToContainer"> 
-                  <label id="from"> </label>
-                  <input class="input-medium" type="text" placeholder="Label (Optional)" id="labelFrom"> <br>
-                </div>
-                <div id="labelFromContainer"> 
-                  <label id="to"> </label>
-                  <input class="input-medium" type="text" placeholder="Label (Optional)" id="labelTo"> <br>
-                </div>
-              </div> <!--end slideVals-->
-
-              <div id="inputLabels">
-                <ul class="table" id="trueOptions"> 
-                  <li id="firstEl"> 
-                  <input class="input-medium options" type="text" placeholder="Option 1" id="1" value="Option 1"> 
-                  </li>
-                </ul>
-
-                <ul class="table"> 
-                  <li>
-                  <input class="input-medium " type="text" placeholder="Add other option" id="addOption" > 
-                  </li>
-                </ul>
-              </div> <!--end inputLabels-->
-
-              @*
-              <hr size="1">
-              <div id="render"> 
-                <h5 id="question"> Question? </h5>
-                <p id="description">I have one</p>
-                <div id="type"> </div>
+              To: 
+              <select name="to" id="to" class="input-mini">
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option selected="selected">9</option>
+                <option>10</option>
+              </select> <br>
+              <div id="labelToContainer"> 
+                <label id="from"> </label>
+                <input class="input-medium" type="text" placeholder="Label (Optional)" id="labelFrom"> <br>
               </div>
-              <hr size="1">
-              *@
+              <div id="labelFromContainer"> 
+                <label id="to"> </label>
+                <input class="input-medium" type="text" placeholder="Label (Optional)" id="labelTo"> <br>
+              </div>
+            </div> <!--end slideVals-->
 
-              <div class="modal-footer">
-                <div class="form-action">
-                  <button class="btn" type="reset" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                  <button class="btn btn-primary" data-dismiss="modal" type="submit" id="createbutton">Create</button>
-                </div>
-              </div> <!--end modal footer-->
+            <div id="inputLabels">
+              <ul class="table" id="trueOptions"> 
+                <li id="firstEl"> 
+                <input class="input-medium options" type="text" placeholder="Option 1" id="1" value="Option 1"> 
+                </li>
+              </ul>
 
-            </div>
-          </div> <!-- end modal -->
+              <ul class="table"> 
+                <li>
+                <input class="input-medium " type="text" placeholder="Add other option" id="addOption" > 
+                </li>
+              </ul>
+            </div> <!--end inputLabels-->
+
+            <div class="modal-footer">
+              <div class="form-action">
+                <button class="btn" type="reset" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button class="btn btn-primary" data-dismiss="modal" type="submit" id="createbutton">Create</button>
+              </div>
+            </div> <!--end modal footer-->
+
+          </div>
+        </div>
+      </div> <!-- end modal -->

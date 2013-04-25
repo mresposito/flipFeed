@@ -49,15 +49,18 @@ class FeedSpec extends Specification {
       }
     }
 
-    /*"tell valid names" in {*/
-    /*  running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {*/
+    "delete" in {
+      running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
+        val id = 1000
+        Feed.findById( id ).isDefined must equalTo(true)
+        Element.findByFeed ( id ).isEmpty must equalTo(false)
 
-    /*    val Some(result)  = routeAndCall( FakeRequest( GET, "/michele/validName").withJsonBody(Json.parse("{\"name\": \"myf1\"}")) )*/
-    /*    status(result) must equalTo(404)*/
+        Feed.delete( id )
 
-    /*    val Some(newResult)  = routeAndCall( FakeRequest( GET, "/michele/validName") )*/
-    /*    status(result) must equalTo(200)*/
-    /*  }*/
-    /*}*/
+        Feed.findById( id ).isDefined must equalTo(false)
+
+        Element.findByFeed ( id ).isEmpty must equalTo(true)
+      }
+    }
   }
 }

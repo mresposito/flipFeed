@@ -17,11 +17,13 @@ POST  /addFeed                        controllers.Feeds.add
 GET   /:owner/validName               controllers.Feeds.validName( owner:String )
 GET   /:owner/:name                   controllers.Feeds.display(owner:String, name: String)
 POST  /:owner/:name                   controllers.Feeds.commentOn(owner:String, name: String)
+DELETE /feed/:id                      controllers.Feeds.delete( id:Long )
 
 # Elements in Feedback
 GET   /feed/:id/elements              controllers.Elements.findByFeed( id:Long )
 POST  /element                        controllers.Elements.add
 POST  /comment                        controllers.Elements.comment
+DELETE /element/:id                   controllers.Elements.delete( id:Long )
 
 # profiles
 GET   /:name                          controllers.Users.index( name:String )

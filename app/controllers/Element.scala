@@ -81,5 +81,13 @@ object Elements extends Controller with Secured {
     }.getOrElse(BadRequest( "Not valid format "))
   }
 
+
+  def delete ( id:Long ) = IsAuthenticated { username => _ => 
+    User.findByEmail( username ).map { user => {
+        Element.delete( id ) 
+        Redirect( routes.Users.index( user.name) )
+      }
+    }.getOrElse(Forbidden)
+  }
   /*def getResultSet( feed:Long ) = ResultSet( feed )*/
 }
