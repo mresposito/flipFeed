@@ -2,26 +2,29 @@
 # Router
 # -----------------------------------------------
 
-define (require, exports, module) ->
-  $ = require 'jquery'
-  _ = require 'underscore'
-  Backbone = require 'backbone'
+define [
+  "jquery",
+  "underscore",
+  "backbone"
+], ($, _, Backbone) ->
 
-  AppRouter = class AppRouter extends Backbone.Router
-  
-  
+  class AppRouter extends Backbone.Router
     routes:
-      "/" : "index"
       ":user/:feedback" : "feedIndex"
+
     initialize: ->
-      console.log("Yeat")
+      console.log("init")
+
+      require ["elements"],(Elements) ->
+        console.log( Elements )
 
     index: ->
       console.log("index!")
 
-    feedIndex: (user,feedName) ->
+    feedIndex: (user,feedback) ->
       console.log("feedIndex")
 
   initialize: ->
     router = new AppRouter()
-    # Backbone.history.start()
+    Backbone.history.start
+      pushHistory: true
