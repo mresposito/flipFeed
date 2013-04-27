@@ -17,11 +17,11 @@ define [
     initialize: ->
       console.log("init router")
  
-    loadEditFeed: ()->
+    loadEditFeed: ->
       require ["views/elements/listEdit"], (ListEdit) ->
         ListEdit.run()
 
-    loadViewFeed: ()->
+    loadViewFeed: ->
       require ["views/elements/view"], (View) ->
         View.run()
 
