@@ -62,4 +62,13 @@
       }
   </div> <!-- end feed container-->
 
+      @if( user.name == feed.owner ) {
+  <script>
+    window.location.hash = 'edit';
+  </script>
+      } else {
+  <script>
+    window.location.hash = 'view';
+  </script>
+      }
 }

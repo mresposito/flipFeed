@@ -11,18 +11,19 @@ define [
   class AppRouter extends Backbone.Router
     routes:
       ":user/:feedback" : "feedIndex"
+      "view" : "loadViewFeed"
+      "edit" : "loadEditFeed"
 
     initialize: ->
-      console.log("init")
+      console.log("init router")
+ 
+    loadEditFeed: ()->
+      require ["views/elements/listEdit"], (ListEdit) ->
+        ListEdit.run()
 
-      require ["collections/elements"],(Elements) ->
-        console.log( Elements )
-
-    index: ->
-      console.log("index!")
-
-    feedIndex: (user,feedback) ->
-      console.log("feedIndex")
+    loadViewFeed: ()->
+      require ["views/elements/view"], (View) ->
+        View.run()
 
   initialize: ->
     router = new AppRouter()

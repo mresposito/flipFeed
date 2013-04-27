@@ -9,9 +9,9 @@ define [
   "backbone",
   "models/element",
   "views/elements/base",
-  "views/elements/view",
-  "views/elements/edit",
-], ($, Ui, _, Backbone, Element, BaseElement, ViewElement, EditElement) ->
+  # "views/elements/view",
+  "views/elements/edit"
+], ($, Ui, _, Backbone, Element, BaseElement, EditElement) ->
   class ElementListEdit extends BaseElement
     initialize: ->
       # create new item
@@ -36,8 +36,6 @@ define [
       element = new Element( attr )
       element.save()
 
-      new ViewElement
-        model: element
       new ElementListEdit
         model: element
 
@@ -57,3 +55,24 @@ define [
         </div>
       </li>
     '''
+
+  run:() ->
+    # init the sort function
+    $("#sortable").sortable(
+      start: (el,ui) ->
+              start_pos = ui.item.index()
+              ui.item.data('start_pos', start_pos)
+      update: changeOrder
+    )
+
+    require ['collections/elements'],(elements) ->
+      # show the list of elements
+      editView = elements.map ( element ) ->
+        new ElementListEdit
+          model: element
+          collection: elements
+
+changeOrder = ( event, ui ) ->
+    start_pos = ui.item.data('start_pos')
+    end_pos = $(ui.item).index()
+    console.log(start_pos + " end:" + end_pos )

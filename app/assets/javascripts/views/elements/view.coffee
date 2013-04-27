@@ -7,8 +7,9 @@ define [
   "jqueryUI",
   "underscore",
   "backbone",
-  "views/elements/base"
-], ($, Ui, _, Backbone, BaseElement) ->
+  "views/elements/base",
+  "models/comment"
+], ($, Ui, _, Backbone, BaseElement, Comment) ->
   class ElementView extends BaseElement
     events:
       "click button#sendForm" : "sendForm"
@@ -56,7 +57,7 @@ define [
       # if @modelComment == null
       val = @retrieveAnswer()
       if val != ""
-        @modelComment = new CommentModel
+        @modelComment = new Comment
           value: val
           kind: @model.get("kind")
           form: @model.get("id")
@@ -114,3 +115,10 @@ define [
         </label>
       <% }); %>
     '''
+
+  run: () ->
+    require ['collections/elements'],(elements) ->
+      # show the list of elements
+      elements.map ( element ) ->
+        new ElementView
+          model: element
