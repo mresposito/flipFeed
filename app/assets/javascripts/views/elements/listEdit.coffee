@@ -7,10 +7,10 @@ define [
   "jqueryUI",
   "underscore",
   "backbone",
-  "element",
-  "baseElement",
-  "viewElement",
-  "editElement"
+  "models/element",
+  "views/elements/base",
+  "views/elements/view",
+  "views/elements/edit",
 ], ($, Ui, _, Backbone, Element, BaseElement, ViewElement, EditElement) ->
   class ElementListEdit extends BaseElement
     initialize: ->

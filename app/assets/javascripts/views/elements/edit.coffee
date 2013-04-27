@@ -6,10 +6,9 @@ define [
   "jquery",
   "underscore",
   "backbone",
-  "element",
-  "baseElement",
-  "viewElement",
-  "editElement"
+  "models/element",
+  "views/elements/base",
+  "views/elements/view"
 ], ($, _, Backbone, Element, BaseElement, ViewElement ) ->
   class EditElement extends BaseElement
     events:

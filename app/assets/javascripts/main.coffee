@@ -9,18 +9,6 @@ require.config (
     jqueryUI: 'http://code.jquery.com/ui/1.10.2/jquery-ui'
     underscore: 'libraries/underscore-min'
     backbone: 'libraries/backbone-min'
-    router: 'router'
-    routes: 'routes' # jsRoutes
-    # backbone models 
-    element: 'models/element'
-    comment: 'models/comment'
-    # backbone collections
-    elements: 'collections/elements'
-    # backbone views
-    baseElement: 'views/elements/base'
-    viewElement: 'views/elements/view'
-    editElement: 'views/elements/edit'
-    listEditElement: 'views/elements/listEdit'
 
   shim:
     'jquery':

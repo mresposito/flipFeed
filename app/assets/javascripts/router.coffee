@@ -15,7 +15,7 @@ define [
     initialize: ->
       console.log("init")
 
-      require ["elements"],(Elements) ->
+      require ["collections/elements"],(Elements) ->
         console.log( Elements )
 
     index: ->

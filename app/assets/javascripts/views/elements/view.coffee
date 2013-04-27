@@ -7,7 +7,7 @@ define [
   "jqueryUI",
   "underscore",
   "backbone",
-  "baseElement"
+  "views/elements/base"
 ], ($, Ui, _, Backbone, BaseElement) ->
   class ElementView extends BaseElement
     events:

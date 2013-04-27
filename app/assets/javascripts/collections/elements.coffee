@@ -8,10 +8,10 @@ define [
   "underscore",
   "backbone",
   "routes",
-  "element",
-  "viewElement",
-  "editElement",
-  "listEditElement"
+  "models/element",
+  "views/elements/view",
+  "views/elements/edit",
+  "views/elements/listEdit"
 ], ($, Ui, _, Backbone, jsRoutes, Element, ViewElement, EditElement, ElementListEdit) ->
 
   class Elements extends Backbone.Collection
