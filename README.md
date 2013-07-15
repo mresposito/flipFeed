@@ -17,7 +17,7 @@ otherwise, use sbt
 
 ## Requirements
 
-You need `sbt` version `0.12` in order to run Open Data on your developer machine.
+You need `sbt` version `0.12` in order to run flipFeed on your developer machine.
 
 ## Running the Tests
 
