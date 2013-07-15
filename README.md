@@ -26,3 +26,7 @@ Simply run
     play test
 
 in order to run the full test suit.
+
+## License
+
+flipFeed is released under the Apache License 2.0. See the bundled LICENSE file for details.
